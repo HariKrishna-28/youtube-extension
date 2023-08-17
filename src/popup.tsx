@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import "./style.css"
+import "~/style.css"
 
 function IndexPopup() {
   const [currentUrl, setCurrentUrl] = useState("")
@@ -8,8 +8,10 @@ function IndexPopup() {
 
   const getCurrentUrl = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-    setCurrentUrl(tab.url)
-    setIsYoutube(tab.url.includes(youtubeURL))
+    if (tab?.url) {
+      setCurrentUrl(tab.url)
+      setIsYoutube(tab.url.includes(youtubeURL))
+    }
   }
 
   useEffect(() => {
@@ -26,7 +28,9 @@ function IndexPopup() {
           </div>
           :
           <div>
-            This extension only works in youtube
+            <h2>
+              This extension only works in youtube
+            </h2>
           </div>
       }
     </div>

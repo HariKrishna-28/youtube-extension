@@ -14,3 +14,8 @@ html {
   align-items: center;
   justify-content: center;
 }
+
+h2 {
+  font-weight: bolder;
+  text-align: center;
+}
