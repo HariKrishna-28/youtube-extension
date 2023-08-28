@@ -8,7 +8,16 @@ interface Props {
 
 const CaptionRenderer: React.FC<Props> = ({ captions }) => {
     return (
-        <div className='root_caption'>
+        <div style={{
+            width: '380px',
+            height: '550px',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            padding: '0 4px',
+        }}>
             {captions ?
                 captions.map((element: CaptionType, index: number) => {
                     return (
