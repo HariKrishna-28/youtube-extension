@@ -4,6 +4,7 @@ html {
   padding: 0%;
   margin: 0%;
   box-shadow: none;
+  overflow: hidden;
 }
 
 #root {
@@ -13,6 +14,7 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: auto;
 }
 
 h2 {
