@@ -1,5 +1,6 @@
 import React from 'react'
 import type { CaptionType } from '~types/CaptionType'
+import CaptionCard from './CaptionCard'
 
 interface Props {
     captions: CaptionType[]
@@ -11,10 +12,10 @@ const CaptionRenderer: React.FC<Props> = ({ captions }) => {
             {captions ?
                 captions.map((element: CaptionType, index: number) => {
                     return (
-                        <div>
-                            {element.start}
-                            {element.duration}
-                        </div>
+                        <CaptionCard
+                            key={index}
+                            data={element}
+                        />
                     )
                 })
                 :

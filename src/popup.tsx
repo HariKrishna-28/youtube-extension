@@ -51,8 +51,7 @@ function IndexPopup() {
     <div id="root">
       {
         isYoutube ?
-          <div>
-            You are currently in youtube <br />
+          <div id="root_inner">
             <CaptionRenderer captions={captions} />
           </div>
           :
