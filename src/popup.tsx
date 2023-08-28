@@ -52,6 +52,9 @@ function IndexPopup() {
       {
         isYoutube ?
           <div>
+            <div style={{ padding: '10px', marginTop: '40px' }}>
+              <h2>Hello!</h2>
+            </div>
             <CaptionRenderer captions={captions} />
           </div>
           :
