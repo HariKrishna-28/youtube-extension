@@ -7,8 +7,16 @@ interface Props {
 
 const CaptionCard: React.FC<Props> = ({ data }) => {
 
+    const seekVideo = () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs[0];
+            chrome.tabs.sendMessage(activeTab.id, { action: 'seekToTimestamp', timestamp: data.start });
+        });
+    }
+
     const handleClick = () => {
-        console.log("hi")
+        console.log(data)
+        seekVideo()
     }
 
 

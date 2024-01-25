@@ -6,6 +6,7 @@ import type { CaptionType } from "~types/CaptionType"
 
 function IndexPopup() {
   const [currentUrl, setCurrentUrl] = useState("")
+  const [prevUrl, setPrevUrl] = useState<String>(null)
   const [isYoutube, setIsYoutube] = useState(false)
   const [queryParam, setQueryParam] = useState("")
   const [captions, setCaptions] = useState<CaptionType[] | null>(null)
@@ -37,6 +38,10 @@ function IndexPopup() {
   }
 
   useEffect(() => {
+    if (currentUrl == prevUrl) {
+      console.log("Value already there")
+    }
+    setPrevUrl(currentUrl)
     getCurrentUrl()
   }, [currentUrl])
 
@@ -54,6 +59,7 @@ function IndexPopup() {
           <div>
             <div style={{ padding: '10px', marginTop: '40px' }}>
               <h2>Hello!</h2>
+              <input type="text" placeholder="check text" />
             </div>
             <CaptionRenderer captions={captions} />
           </div>
