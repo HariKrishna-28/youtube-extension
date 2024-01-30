@@ -10,6 +10,7 @@ function IndexPopup() {
   const [isYoutube, setIsYoutube] = useState(false)
   const [queryParam, setQueryParam] = useState("")
   const [captions, setCaptions] = useState<CaptionType[] | null>(null)
+  const [transcriptData, setTranscriptData] = useState<CaptionType[] | null>(captions)
   const [loading, setLoading] = useState(true)
 
 
@@ -34,6 +35,7 @@ function IndexPopup() {
     try {
       const res = await getVideoData(queryParam)
       setCaptions(res.data)
+      setTranscriptData(res.data)
     } catch (error) {
       console.log(error.message)
     }
@@ -42,6 +44,22 @@ function IndexPopup() {
 
   const startLoad = () => setLoading(true)
   const stopLoad = () => setLoading(false)
+
+  const filterData = (inputValue: String) => {
+    if (inputValue == null) return captions
+    const lowercasedInput = inputValue.toLowerCase();
+
+    const filteredData = captions.filter(item => {
+      return item.text.toLowerCase().includes(lowercasedInput);
+    });
+
+    return filteredData
+  };
+
+  const handleInput = (e: String) => {
+    if (loading) return
+    setTranscriptData(filterData(e))
+  }
 
   useEffect(() => {
     if (currentUrl == prevUrl) {
@@ -56,9 +74,6 @@ function IndexPopup() {
     getTranscripts()
   }, [isYoutube])
 
-  useEffect(() => {
-    console.log(loading);
-  }, [loading])
 
 
 
@@ -69,10 +84,13 @@ function IndexPopup() {
           !loading ?
             <div>
               <div style={{ padding: '10px', marginTop: '40px' }}>
-                <input type="text"
-                  placeholder="check text" />
+                <input
+                  onChange={(e) => handleInput(e.target.value)}
+                  type="text"
+                  placeholder="check text"
+                />
               </div>
-              <CaptionRenderer captions={captions} />
+              <CaptionRenderer captions={transcriptData} />
             </div>
             :
             <div>
