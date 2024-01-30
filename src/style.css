@@ -6,6 +6,18 @@ html {
   box-shadow: none;
 }
 
+input[type="text"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  border: none;
+  background-color: white;
+  color: black;
+  outline: none;
+  border-radius: 5px;
+}
+
 #root {
   width: 380px;
   height: 550px;

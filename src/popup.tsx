@@ -10,6 +10,7 @@ function IndexPopup() {
   const [isYoutube, setIsYoutube] = useState(false)
   const [queryParam, setQueryParam] = useState("")
   const [captions, setCaptions] = useState<CaptionType[] | null>(null)
+  const [loading, setLoading] = useState(true)
 
 
   // should only be displayed in youtube video tabs
@@ -29,13 +30,18 @@ function IndexPopup() {
 
 
   const getTranscripts = async () => {
+    startLoad()
     try {
       const res = await getVideoData(queryParam)
       setCaptions(res.data)
     } catch (error) {
       console.log(error.message)
     }
+    stopLoad()
   }
+
+  const startLoad = () => setLoading(true)
+  const stopLoad = () => setLoading(false)
 
   useEffect(() => {
     if (currentUrl == prevUrl) {
@@ -50,19 +56,30 @@ function IndexPopup() {
     getTranscripts()
   }, [isYoutube])
 
+  useEffect(() => {
+    console.log(loading);
+  }, [loading])
+
 
 
   return (
     <div id="root">
       {
         isYoutube ?
-          <div>
-            <div style={{ padding: '10px', marginTop: '40px' }}>
-              <h2>Hello!</h2>
-              <input type="text" placeholder="check text" />
+          !loading ?
+            <div>
+              <div style={{ padding: '10px', marginTop: '40px' }}>
+                <input type="text"
+                  placeholder="check text" />
+              </div>
+              <CaptionRenderer captions={captions} />
             </div>
-            <CaptionRenderer captions={captions} />
-          </div>
+            :
+            <div>
+              <h2>
+                Loading
+              </h2>
+            </div>
           :
           <div>
             <h2>
