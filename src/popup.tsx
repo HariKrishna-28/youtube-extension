@@ -33,9 +33,18 @@ function IndexPopup() {
   const getTranscripts = async () => {
     startLoad()
     try {
-      const res = await getVideoData(queryParam)
-      setCaptions(res.data)
-      setTranscriptData(res.data)
+      const sessionTranscriptData = getVideoTranscriptData(queryParam)
+      if (!sessionTranscriptData) {
+        removeVideoTranscriptData()
+        const res = await getVideoData(queryParam)
+        setVideoTranscriptData(queryParam, JSON.stringify(res.data))
+        setCaptions(res.data)
+        setTranscriptData(res.data)
+      } else {
+        const parsedTranscript = JSON.parse(sessionTranscriptData)
+        setCaptions(parsedTranscript)
+        setTranscriptData(parsedTranscript)
+      }
     } catch (error) {
       console.log(error.message)
     }
@@ -56,15 +65,30 @@ function IndexPopup() {
     return filteredData
   };
 
+  const setVideoTranscriptData = (videoId: string, transcript: string) => {
+    localStorage.setItem(videoId, transcript)
+  }
+
+  const getVideoTranscriptData = (videoId: string) => {
+    return localStorage.getItem(videoId)
+  }
+  const removeVideoTranscriptData = () => {
+    localStorage.clear()
+  }
+
+
+
   const handleInput = (e: String) => {
     if (loading) return
     setTranscriptData(filterData(e))
   }
 
+
+
   useEffect(() => {
-    if (currentUrl == prevUrl) {
-      console.log("Value already there")
-    }
+    // if (currentUrl == prevUrl) {
+    //   console.log("Value already there")
+    // }
     setPrevUrl(currentUrl)
     getCurrentUrl()
   }, [currentUrl])
