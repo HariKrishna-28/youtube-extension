@@ -75,8 +75,6 @@ function IndexPopup() {
   }, [isYoutube])
 
 
-
-
   return (
     <div id="root">
       {
@@ -87,7 +85,7 @@ function IndexPopup() {
                 <input
                   onChange={(e) => handleInput(e.target.value)}
                   type="text"
-                  placeholder="check text"
+                  placeholder="Enter keyword"
                 />
               </div>
               <CaptionRenderer captions={transcriptData} />

@@ -29,15 +29,17 @@ const CaptionCard: React.FC<Props> = ({ data }) => {
                 alignContent: 'center',
                 justifyContent: 'space-between',
                 width: '95%',
-                backgroundColor: 'grey',
+                backgroundColor: '#191e24',
                 borderRadius: '5px',
                 padding: '5px',
-                color: 'black',
+                color: '#a6adbb',
                 cursor: 'pointer',
                 fontSize: '16px',
+                // border: '1px solid #424952'
+
             }}
         >
-            <div>
+            <div style={{ fontWeight: 'bold' }}>
                 {data.text}
             </div>
             <div>
