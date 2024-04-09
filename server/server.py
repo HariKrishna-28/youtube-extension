@@ -18,14 +18,14 @@ app.add_middleware(
 redis_client = Redis(host='localhost', port=6379)
 
 
-@app.on_event("startup")
-async def startup_event():
-    app.state.redis = redis_client
-    print("Server up")
+# @app.on_event("startup")
+# async def startup_event():
+#     app.state.redis = redis_client
+#     print("Server up")
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    app.state.redis.close()
+# @app.on_event("shutdown")
+# async def shutdown_event():
+#     app.state.redis.close()
 
 def get_redis():
     return redis_client
