@@ -7,6 +7,7 @@
 .pnp.js
 
 /server/__pycache__
+/server/utils/__pycache__
 
 # testing
 /coverage
