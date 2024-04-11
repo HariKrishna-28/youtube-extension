@@ -1,16 +1,9 @@
-import zlib
+import gzip
 
 
-def compress_string(response):
-    try:
-        compressed_string = zlib.compress(response.encode())
-        return compressed_string.hex()
-    except Exception:
-        print(Exception)
+def compress_string(input_string):
+    return gzip.compress(input_string.encode())
 
 
-def decompress_string(response):
-    try:
-        return zlib.decompress(bytes.fromhex(response))
-    except Exception:
-        print(Exception)
+def decompress_string(compressed_data):
+    return gzip.decompress(compressed_data).decode()
