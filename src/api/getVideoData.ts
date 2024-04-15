@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "http://localhost:8181"
+const baseURL = "https://youtube-transcript-api.cyclic.app"
 
 export const getVideoData = (videoId: string) => {
   const config = {
