@@ -21,7 +21,7 @@ app.add_middleware(
 )
 
 
-redis_client = Redis(host="localhost", port=6379)
+redis_client = Redis(host="redis", port=6379)
 
 
 # @app.on_event("startup")
