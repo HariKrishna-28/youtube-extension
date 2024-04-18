@@ -45,5 +45,17 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 8000
 
+
+FROM redis:latest as redis_config
+
+# Copy the Redis configuration file into the container.
+COPY redis.conf /redis.conf
+
+# ---- Final Stage ----
+FROM base as final
+
+# Copy the Redis configuration from the Redis configuration stage.
+COPY --from=redis_config /redis.conf /redis.conf
+
 # Run the application.
 CMD uvicorn 'app:app' --host=0.0.0.0 --port=8000
