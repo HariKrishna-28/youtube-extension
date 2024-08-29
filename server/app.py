@@ -21,18 +21,21 @@ app.add_middleware(
 )
 
 
-redis_client = Redis(host="redis", port=6379)
+# docker container
+# redis_client = Redis(host="redis", port=6379)
+# local redis
+redis_client = Redis(host="localhost", port=6379)
 
 
 # @app.on_event("startup")
 # async def startup_event():
+#     redis_client.
 #     # app.state.redis = redis_client
-#     logger.info("starting api")
 
 
 # @app.on_event("shutdown")
 # async def shutdown_event():
-#     app.state.redis.close()
+#     redis_client.close()
 
 
 def get_redis():

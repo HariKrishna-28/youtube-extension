@@ -14,6 +14,7 @@ function IndexPopup() {
   const [loading, setLoading] = useState(true)
 
 
+
   // should only be displayed in youtube video tabs
   const youtubeURL = "https://www.youtube.com/watch"
 
@@ -97,6 +98,7 @@ function IndexPopup() {
     if (!isYoutube) return
     getTranscripts()
   }, [isYoutube])
+
 
 
   return (
