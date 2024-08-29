@@ -5,7 +5,6 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from redis import Redis
 import json
 import logging
-from utils.youtube_client import get_transcript
 
 app = FastAPI()
 logging.basicConfig(
@@ -22,38 +21,37 @@ app.add_middleware(
 )
 
 
-# redis_client = Redis(host="localhost", port=6379)
+# docker container
+# redis_client = Redis(host="redis", port=6379)
+# local redis
+redis_client = Redis(host="localhost", port=6379)
 
 
 # @app.on_event("startup")
 # async def startup_event():
+#     redis_client.
 #     # app.state.redis = redis_client
-#     logger.info("starting api")
 
 
 # @app.on_event("shutdown")
 # async def shutdown_event():
-#     app.state.redis.close()
+#     redis_client.close()
 
 
-# def get_redis():
-#     return redis_client
+def get_redis():
+    return redis_client
 
 
 @app.get("/{video_id}")
-# async def root(video_id: str, redis: Redis = Depends(get_redis)):
-async def root(video_id: str):
+async def root(video_id: str, redis: Redis = Depends(get_redis)):
     try:
-        transcript_data = get_transcript(video_id)
-        return JSONResponse(status_code=200, content=transcript_data)
+        value = redis.get(video_id)
+        if value is None:
+            transcript_data = YouTubeTranscriptApi.get_transcript(video_id=video_id)
+            redis.set(video_id, json.dumps(transcript_data))
+            return JSONResponse(status_code=200, content=transcript_data)
 
-        # value = redis.get(video_id)
-        # if value is None:
-        #     transcript_data = YouTubeTranscriptApi.get_transcript(video_id=video_id)
-        #     redis.set(video_id, json.dumps(transcript_data))
-        #     return JSONResponse(status_code=200, content=transcript_data)
-
-        # return JSONResponse(status_code=200, content=json.loads(value))
+        return JSONResponse(status_code=200, content=json.loads(value))
 
     except Exception as e:
         raise HTTPException(status_code=500, detail={"message": str(e)})
